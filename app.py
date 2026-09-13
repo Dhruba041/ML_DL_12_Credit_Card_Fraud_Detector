@@ -198,6 +198,7 @@ if st.button("Classify Transaction"):
                 font-weight:bold;
                 text-align:center;
             ">
+                Fraud Probability: {prediction}
                 Predicted Machine Failure Possibility: {Prediction_text}
             </div>
             """,
