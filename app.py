@@ -171,7 +171,9 @@ if st.button("Classify Transaction"):
         #predicted_class = int(prediction[0])
         #ML Model
 
-        
+        #st.write(input_data_scaled)
+        #st.write(prediction)
+
         if predicted_class == 1:
             Prediction_text = "The transaction is classified as Fraudulent."
         else:
@@ -198,7 +200,6 @@ if st.button("Classify Transaction"):
                 font-weight:bold;
                 text-align:center;
             ">
-                Fraud Probability: {prediction}
                 Predicted Machine Failure Possibility: {Prediction_text}
             </div>
             """,
