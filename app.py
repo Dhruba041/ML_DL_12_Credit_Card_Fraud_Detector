@@ -85,94 +85,123 @@ Amount = st.number_input("Amount", min_value=0.0, value=0.0, step=1.0, format="%
 
 if st.button("Classify Transaction"):
 
-    feature_names = [
-        'Time',
-        'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9',
-        'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17',
-        'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25',
-        'V26', 'V27', 'V28',
-        'Amount'
-    ]
+    all_inputs = [
+    Time, V1, V2, V3, V4, V5, V6, V7, V8, V9,
+    V10, V11, V12, V13, V14, V15, V16, V17, V18,
+    V19, V20, V21, V22, V23, V24, V25, V26, V27, V28,
+    Amount
+    ]   
 
-    #input_data = np.array([[Time, V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14,
-     #                       V15, V16, V17, V18, V19, V20, V21, V22, V23, V24, V25,
-     #                       V26, V27, V28, Amount]])
+    if all(value == 0 for value in all_inputs):
 
-    input_data = pd.DataFrame(
-        [[
-            Time,
-            V1, V2, V3, V4, V5, V6, V7, V8, V9, V10,
-            V11, V12, V13, V14, V15, V16, V17, V18,
-            V19, V20, V21, V22, V23, V24, V25, V26,
-            V27, V28,
-            Amount
-        ]],
-        columns=feature_names
-    )
+        st.markdown(
+            """
+            <div style="
+                background-color:#fff3e0;
+                padding:15px;
+                border-radius:10px;
+                border:2px solid #ff9800;
+                color:#e65100;
+                font-size:18px;
+                font-weight:bold;
+                text-align:center;
+            ">
+                ⚠️ Please enter valid Input
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-    skewed_cols = ['V1',
-                    'V2',
-                    'V3',
-                    'V5',
-                    'V6',
-                    'V7',
-                    'V9',
-                    'V10',
-                    'V12',
-                    'V14',
-                    'V16',
-                    'V17',
-                    'V18',
-                    'V20',
-                    'V21',
-                    'V22',
-                    'V23',
-                    'V24',
-                    'V27',
-                    'V28',
-                    'Amount']
-
-    input_data[skewed_cols] = pt.transform(input_data[skewed_cols])
-    
-    input_data_scaled = scaler.transform(input_data)    
-    
-    prediction = model.predict(input_data_scaled)
-    predicted_class = (prediction > 0.3).astype(int)[0][0]
-    #DL Model
-    #predicted_class = int(prediction[0])
-    #ML Model
-
-    
-    if predicted_class == 1:
-        Prediction_text = "The transaction is classified as Fraudulent."
     else:
-        Prediction_text = "The transaction is classified as Non-Fraudulent."
 
-    if Prediction_text == "The transaction is classified as Fraudulent.":
-        bg_color = "#ffebee"      # Light red
-        border_color = "#d32f2f"  # Red
-        text_color = "#b71c1c"    # Dark red
-    else:
-        bg_color = "#e8f5e9"      # Light green
-        border_color = "#388e3c"  # Green
-        text_color = "#1b5e20"    # Dark green
+        feature_names = [
+            'Time',
+            'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9',
+            'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17',
+            'V18', 'V19', 'V20', 'V21', 'V22', 'V23', 'V24', 'V25',
+            'V26', 'V27', 'V28',
+            'Amount'
+        ]
 
-    st.markdown(
-        f"""
-        <div style="
-            background-color:{bg_color};
-            padding:15px;
-            border-radius:10px;
-            border:2px solid {border_color};
-            color:{text_color};
-            font-size:18px;
-            font-weight:bold;
-            text-align:center;
-        ">
-            Predicted Machine Failure Possibility: {Prediction_text}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        #input_data = np.array([[Time, V1, V2, V3, V4, V5, V6, V7, V8, V9, V10, V11, V12, V13, V14,
+        #                       V15, V16, V17, V18, V19, V20, V21, V22, V23, V24, V25,
+        #                       V26, V27, V28, Amount]])
 
-    #            Fraud Probability: {prediction}
+        input_data = pd.DataFrame(
+            [[
+                Time,
+                V1, V2, V3, V4, V5, V6, V7, V8, V9, V10,
+                V11, V12, V13, V14, V15, V16, V17, V18,
+                V19, V20, V21, V22, V23, V24, V25, V26,
+                V27, V28,
+                Amount
+            ]],
+            columns=feature_names
+        )
+
+        skewed_cols = ['V1',
+                        'V2',
+                        'V3',
+                        'V5',
+                        'V6',
+                        'V7',
+                        'V9',
+                        'V10',
+                        'V12',
+                        'V14',
+                        'V16',
+                        'V17',
+                        'V18',
+                        'V20',
+                        'V21',
+                        'V22',
+                        'V23',
+                        'V24',
+                        'V27',
+                        'V28',
+                        'Amount']
+
+        input_data[skewed_cols] = pt.transform(input_data[skewed_cols])
+        
+        input_data_scaled = scaler.transform(input_data)    
+        
+        prediction = model.predict(input_data_scaled)
+        predicted_class = (prediction > 0.3).astype(int)[0][0]
+        #DL Model
+        #predicted_class = int(prediction[0])
+        #ML Model
+
+        
+        if predicted_class == 1:
+            Prediction_text = "The transaction is classified as Fraudulent."
+        else:
+            Prediction_text = "The transaction is classified as Non-Fraudulent."
+
+        if Prediction_text == "The transaction is classified as Fraudulent.":
+            bg_color = "#ffebee"      # Light red
+            border_color = "#d32f2f"  # Red
+            text_color = "#b71c1c"    # Dark red
+        else:
+            bg_color = "#e8f5e9"      # Light green
+            border_color = "#388e3c"  # Green
+            text_color = "#1b5e20"    # Dark green
+
+        st.markdown(
+            f"""
+            <div style="
+                background-color:{bg_color};
+                padding:15px;
+                border-radius:10px;
+                border:2px solid {border_color};
+                color:{text_color};
+                font-size:18px;
+                font-weight:bold;
+                text-align:center;
+            ">
+                Predicted Machine Failure Possibility: {Prediction_text}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        #            Fraud Probability: {prediction}
