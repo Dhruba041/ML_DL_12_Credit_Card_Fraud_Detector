@@ -166,7 +166,7 @@ if st.button("Classify Transaction"):
         input_data_scaled = scaler.transform(input_data)    
         
         prediction = model.predict(input_data_scaled)
-        predicted_class = (prediction > 0.3).astype(int)[0][0]
+        predicted_class = (prediction > 0.5).astype(int)[0][0]
         #DL Model
         #predicted_class = int(prediction[0])
         #ML Model
